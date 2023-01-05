@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>Activity Log</h1>
+
+<!-- Add login form -->
+<form id="login-form">
+  <label for="username">Username:</label><br>
+  <input type="text" id="username" name="username"><br>
+  <label for="password">Password:</label><br>
+  <input type="password" id="password" name="password"><br><br>
+  <input type="submit" value="Login" onsubmit="login(); return false;">
+  <input type="button" value="Sign Up" onclick="signUp();">
+</form> 
+
+<!-- Add activity form -->
+<form id="activity-form" onsubmit="logActivity(); window.location='http://www.example.com/success.html'; return false;">
+  <label for="activity-title">Activity Title:</label><br>
+  <input type="text" id="activity-title" name="activity-title"><br>
+  <label for="activity-rating">Activity Rating:</label><br>
+  <div id="activity-rating-stars">
+    <span onclick="setRating(1)">&#9734;</span>
+    <span onclick="setRating(2)">&#9734;</span>
+    <span onclick="setRating(3)">&#9734;</span>
+    <span onclick="setRating(4)">&#9734;</span>
+    <span onclick="setRating(5)">&#9734;</span>
+  </div>
+  <input type="number" id="activity-rating" name="activity-rating" min="1" max="5" required><br>
+  <label for="activity-description">Activity Description:</label><br>
+  <textarea id="activity-description" name="activity-description"></textarea><br>
+  <label for="activity-pictures">Activity Pictures:</label><br>
+  <input type="file" id="activity-pictures" name="activity-pictures" multiple><br><br>
+  <input type="submit" value="Log Activity">
+</form> 
+
+<button onclick="showActivityLog()">Show activity log</button>
+<button onclick="getTimeSinceLastActivity('Brushing teeth')">Get time since last brushing teeth</button>
+
+<script>
+const activityLog = [];
+let currentUser = null;
+
+function login() {
+  // Get login form values
+  const username = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
+
+  // Perform login logic here (e.g. check database for user with matching username and password)
+  // For now, we will just set the current user to the entered username
+  currentUser = username;
+}
+
+function signUp() {
+  // Perform sign up logic here (e.g. add new user to database)
+  // For now, we will just set the current user to the entered username
+  currentUser = document.getElementById("username.value;
+}
+
+function logActivity() {
+// Make sure the user is logged in
+if (currentUser === null) {
+alert("Please login to log an activity.");
+return;
+}
+
+// Get form values
+const activityTitle = document.getElementById("activity-title").value;
+const activityRating = document.getElementById("activity-rating").value;
+const activityDescription = document.getElementById("activity-description").value;
+const activityPictures = document.getElementById("activity-pictures").files;
+
+// Get current date and time
+const now = new Date();
+
+// Format the activity data as an object
+const activityData = {
+title: activityTitle,
+rating: activityRating,
+description: activityDescription,
+pictures: activityPictures,
+time: now,
+user: currentUser
+}
+
+// Add the activity data to the activity log
+activityLog.push(activityData);
+}
+
+function showActivityLog() {
+console.log(activityLog);
+window.location='http://www.example.com/activity-log.html';
+}
+
+function getTimeSinceLastActivity(activityTitle) {
+// Find the most recent log entry for the specified activity
+for (let i = activityLog.length - 1; i >= 0; i--) {
+if (activityLog[i].title === activityTitle) {
+// Calculate the time difference
+const timeDifference = new Date() - activityLog[i].time;
+// Calculate the number of months in the time difference
+const monthsDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24 * 30));
+console.log(Time since last ${activityTitle}: ${monthsDifference} months);
+break;
+}
+}
+}
+
+function setRating(rating) {
+// Update the value of the activity-rating input field
+document.getElementById("activity-rating").value = rating;
+
+// Update the appearance of the stars
+const stars = document.getElementById("activity-rating-stars").children;
+for (let i = 0; i < stars.length; i++) {
+if (i < rating) {
+stars[i].style.color = "orange";
+} else {
+stars[i].style.color = "black";
+}
+}
+}
+</script>
+
+</body>
+</html>
+```
